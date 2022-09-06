@@ -28,20 +28,20 @@ export const VideojuegosApp = () => {
                     {/* 
                     Creamos la lista de géneros 
                     */} 
-                    <ol className="list-group list-group-numbered"> 
-                        { 
-                            generos.map(genero => { 
-                                //Reemplazamos el elemento <li> por la llamda al componente ResultadoVideojuegos, pasando 
-                                // como parámetro el género. Se tiene que utilizar la propiedad key al igual que se hizo  
-                                // con el elemento <li> anteriormente 
-                                return <ResultadoVideojuegos 
-                                    key= {genero}
-                                    genero={genero} 
-                                    apiKey = {"d9080123cda745c2880f8f8322939d72"}
-                                /> 
-                            }) 
-                        } 
-                    </ol> 
+                    <div class="d-flex flex-wrap">
+                            { 
+                                generos.map(genero => { 
+                                    //Reemplazamos el elemento <li> por la llamda al componente ResultadoVideojuegos, pasando 
+                                    // como parámetro el género. Se tiene que utilizar la propiedad key al igual que se hizo  
+                                    // con el elemento <li> anteriormente 
+                                    return <ResultadoVideojuegos 
+                                        key= {genero}
+                                        genero={genero} 
+                                        apiKey = {"d9080123cda745c2880f8f8322939d72"}
+                                    /> 
+                                }) 
+                            } 
+                    </div> 
                 </div> 
             </div> 
  

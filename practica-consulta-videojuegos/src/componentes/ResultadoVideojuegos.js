@@ -29,13 +29,14 @@ import { InfoVideojuego } from './InfoVideojuegos';
 
    return( 
    <> 
-      <h3 className="card-title">{props.genero}</h3> 
+      <h3 className="card-title mb-3 ml-auto" style={{width: 100+ '%'}}>{props.genero}</h3> 
       {/* 
    Creamos la lista de juegos con la información que recuperamos de la invocación del api de RAWG, 
    utilizando la variable infoJuegos que obtuvimos en la desestructuración del hook useState. 
       */} 
          { 
-            infoJuegos.map((infoJuego) =>  
+            infoJuegos.map((infoJuego) => 
+
                <InfoVideojuego 
                   juego={infoJuego}
                />
