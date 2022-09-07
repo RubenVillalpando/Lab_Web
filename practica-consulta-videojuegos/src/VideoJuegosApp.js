@@ -37,7 +37,7 @@ export const VideojuegosApp = () => {
                                     return <ResultadoVideojuegos 
                                         key= {genero}
                                         genero={genero} 
-                                        apiKey = {"d9080123cda745c2880f8f8322939d72"}
+                                        apiKey = {"8642838e8d18469f8b1e5a8edf833be7"}
                                     /> 
                                 }) 
                             } 
