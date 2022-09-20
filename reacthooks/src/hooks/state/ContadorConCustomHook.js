@@ -1,5 +1,5 @@
 import React from 'react'; 
-import { useContador } from '../custom/useContador'; 
+import { useContador } from '../../custom/useContador'; 
  
 export const ContadorConCustomHook = () => { 
  

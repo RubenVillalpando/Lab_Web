@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'; 
+import React, { useEffect, useState } from 'react'; 
  
 export const Mensaje = () => { 
  
@@ -9,8 +9,7 @@ export const Mensaje = () => {
  
         //Encapsulamos la funcionalidad de las coordenadas en una función. 
         const mouseMove = (e) => { 
-            const coordenadas = { x: e.x, y: e.y }; 
-            console.log(coordenadas); 
+            setCoordenadas({x: e.x, y: e.y})
         } 
  
         //Obtenemos las coordenadas X y Y del mouse y las mostramos en la consola del navegador. Mandamos llamar 
@@ -23,10 +22,14 @@ export const Mensaje = () => {
             console.log('Componente desmontado...'); 
         } 
     }, []); 
+
+    let [coordenadas, setCoordenadas] = useState({x: 0, y: 0})
  
     return ( 
         <> 
             <h3>Este es un mensaje...</h3> 
+            <p>coordenada en x: {coordenadas.x}</p>
+            <p>coordenada en y: {coordenadas.y}</p>
         </> 
     ) 
 }
