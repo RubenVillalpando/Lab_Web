@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useMemo, useState } from "react";
 
 export const UseFetch = (url) => {
   const componenteCargando = (
@@ -11,9 +11,10 @@ export const UseFetch = (url) => {
     cargando: componenteCargando,
   });
 
-  useEffect(() => {
+  useMemo(() => {
     fetch(url)
       .then((respuesta) => {
+        console.log("se hizo fetch y se obtuvo una respuesta");
         return respuesta.json();
       })
       .then((juegosObj) => {
