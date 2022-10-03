@@ -1,32 +1,32 @@
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 
-export const UseFetch = (url) => {
-  const componenteCargando = (
+export const useFetch = (url, defaultComponent) => {
+  const loadingComponent = defaultComponent || (
     <>
       <p>Cargando...</p>
     </>
   );
   const [state, setState] = useState({
-    juegos: null,
-    cargando: componenteCargando,
+    response: null,
+    loading: loadingComponent,
   });
 
-  useMemo(() => {
+  useState(() => {
     fetch(url)
-      .then((respuesta) => {
+      .then((response) => {
         console.log("se hizo fetch y se obtuvo una respuesta");
-        return respuesta.json();
+        return response.json();
       })
-      .then((juegosObj) => {
+      .then((json) => {
         setState({
-          juegos: juegosObj.results,
-          cargando: null,
+          response: json,
+          loading: null,
         });
       });
     return () => {
       setState({
-        juegos: null,
-        cargando: componenteCargando,
+        response: null,
+        loading: loadingComponent,
       });
     };
   }, [url]);
