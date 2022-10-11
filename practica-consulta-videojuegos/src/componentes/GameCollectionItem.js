@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useFetch } from "../customHooks/UseFetch";
 
-export const GameCollectionItem = ({ id, ids, apiKey, games }) => {
+export const GameCollectionItem = ({ id, ids, setIds, apiKey, games }) => {
   const url = `https://api.rawg.io/api/games/${id}?key=${apiKey}`;
   const { response, loading } = useFetch(url);
 
@@ -25,6 +25,11 @@ export const GameCollectionItem = ({ id, ids, apiKey, games }) => {
     }
   }, [response]);
 
+  const handleDelete = (e) => {
+    setIds(ids.filter((id) => id !== Number(e.target.id)));
+    console.log(ids);
+  };
+
   return (
     <>
       {loading || (
@@ -39,6 +44,9 @@ export const GameCollectionItem = ({ id, ids, apiKey, games }) => {
               <div class="col">
                 <p class="card-text">Metacritic: {metacritic}</p>
               </div>
+              <button onClick={handleDelete} id={id}>
+                delete
+              </button>
             </div>
           </div>
         </div>

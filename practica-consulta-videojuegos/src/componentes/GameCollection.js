@@ -13,6 +13,7 @@ export const GameCollection = (props) => {
               <GameCollectionItem
                 key={id}
                 id={id}
+                setIds={props.setIds}
                 ids={props.ids}
                 apiKey={props.apiKey}
                 games={games}

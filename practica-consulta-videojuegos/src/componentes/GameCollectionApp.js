@@ -21,7 +21,11 @@ export const GameCollectionApp = () => {
       <div className="jumbotron jumbotron-fluid">
         <div className="container">
           <GameCollectionAdd setIds={setIds} />
-          <GameCollection ids={ids} apiKey="8642838e8d18469f8b1e5a8edf833be7" />
+          <GameCollection
+            ids={ids}
+            apiKey="8642838e8d18469f8b1e5a8edf833be7"
+            setIds={setIds}
+          />
         </div>
       </div>
     </>
