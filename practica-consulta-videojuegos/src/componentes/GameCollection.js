@@ -6,7 +6,7 @@ export const GameCollection = (props) => {
   const games = JSON.parse(window.localStorage.getItem("games")) || [];
   return (
     <>
-      <div class="d-flex flex-wrap">
+      <div className="d-flex flex-wrap justify-content-center">
         {props.ids.map((id) => {
           return (
             <>

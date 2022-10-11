@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 export const GameCollectionAdd = ({ setIds }) => {
-  const [textInput, setTextInput] = useState(
-    "Introduce el ID de un juego (ej: 1)"
-  );
+  const [textInput, setTextInput] = useState(  );
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -21,14 +19,16 @@ export const GameCollectionAdd = ({ setIds }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="input-group input-group-sm mb-3">
+      <div className="input-group input-group-sm my-3">
         <input
+          style={{ height: 3 + "rem", fontSize: 1.2 + "rem"}}
           type="text"
           value={textInput}
+          placeholder = "Introduce el ID de un juego (ej: 1)"
           onChange={handleInputChange}
           className="form-control"
         />
-        <button type="submit">submit</button>
+        <button className="btn btn-primary" type="submit" style={{fontSize: 1.2 + "rem", width: 6 + "rem"}}>Buscar</button>
       </div>
     </form>
   );
