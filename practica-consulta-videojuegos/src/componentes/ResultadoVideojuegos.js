@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useFetch } from "../customHooks/useFetch";
+import { useFetch } from "../customHooks/usefetch";
 import { InfoVideojuego } from "./InfoVideojuegos";
 
 export const ResultadoVideojuegos = (props) => {
