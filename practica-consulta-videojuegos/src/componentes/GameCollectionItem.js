@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useFetch } from "../customHooks/usefetch";
+import { useFetch } from "../customHooks/useFetch";
 
 export const GameCollectionItem = ({ id, ids, setIds, apiKey, games }) => {
   const url = `https://api.rawg.io/api/games/${id}?key=${apiKey}`;
@@ -26,8 +26,7 @@ export const GameCollectionItem = ({ id, ids, setIds, apiKey, games }) => {
   }, [response]);
 
   const handleDelete = (e) => {
-    setIds(ids.filter((id) => id !== Number(e.target.id)));
-    console.log(ids);
+    setIds(ids.filter((id) => id !== e.target.id));
   };
 
   return (
