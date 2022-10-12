@@ -26,7 +26,8 @@ export const GameCollectionItem = ({ id, ids, setIds, apiKey, games }) => {
   }, [response]);
 
   const handleDelete = (e) => {
-    setIds(ids.filter((id) => id !== e.target.id));
+    console.log(ids)
+    setIds(ids.filter((id) => Number(id) !== Number(e.target.id)));
   };
 
   return (
