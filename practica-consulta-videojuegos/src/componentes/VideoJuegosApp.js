@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { AgregaGenero } from "./componentes/AgregaGenero";
-import { ResultadoVideojuegos } from "./componentes/ResultadoVideojuegos";
+import { AgregaGenero } from "./AgregaGenero";
+import { ResultadoVideojuegos } from "./ResultadoVideojuegos";
 
 export const VideojuegosApp = () => {
   //Utilizamos el hook useState para inicializar la lista de generos de videojuegos.
@@ -31,7 +31,7 @@ export const VideojuegosApp = () => {
           {/* 
                     Creamos la lista de géneros 
                     */}
-          <div class="d-flex flex-wrap">
+          <div className="d-flex flex-wrap">
             {generos.map((genero) => {
               //Reemplazamos el elemento <li> por la llamda al componente ResultadoVideojuegos, pasando
               // como parámetro el género. Se tiene que utilizar la propiedad key al igual que se hizo
