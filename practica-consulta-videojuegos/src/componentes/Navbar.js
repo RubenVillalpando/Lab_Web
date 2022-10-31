@@ -55,6 +55,11 @@ export const Navbar = () => {
           >
             Salir
           </NavLink>
+          {currentUser ? (
+            <h2 className="text-white"></h2>
+          ) : (
+            <h2 className="text-white">{currentUser}</h2>
+          )}
         </ul>
       </div>
     </nav>

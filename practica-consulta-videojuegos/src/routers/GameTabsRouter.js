@@ -1,5 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import { GameCollectionApp } from "../componentes/GameCollectionApp";
 import { GameSearch } from "../componentes/GameSearch";
 import { Login } from "../componentes/Login";
@@ -15,6 +20,7 @@ export const GameTabsRouter = () => {
         <Route exact path="/game-genre" element={<VideojuegosApp />} />
         <Route exact path="/game-search" element={<GameSearch />} />
         <Route exact path="/login" element={<Login />} />
+        <Route path="*" element={<Navigate to="/game-collection" replace />} />
       </Routes>
     </>
   );
