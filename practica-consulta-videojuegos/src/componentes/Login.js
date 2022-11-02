@@ -18,7 +18,7 @@ export const Login = () => {
     <>
     <div className="container d-flex  flex-wrap flex-column align-items-center justify-content-center login-box"> 
       <div className="row">
-        <h1 className="display-4 login-title">Inicia Sesión</h1>
+        <h1 className="display-4 login-title text-center">Inicia Sesión</h1>
       </div>
       <div className="row py-2">
         <input
