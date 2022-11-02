@@ -28,6 +28,8 @@ export const GameCollectionItem = ({ id, ids, setIds, apiKey, games }) => {
   const handleDelete = (e) => {
     console.log(ids);
     setIds(ids.filter((id) => Number(id) !== Number(e.target.id)));
+    games = games.filter(game=>Number(game.id) !== Number(e.target.id))
+    window.localStorage.setItem("games", JSON.stringify(games))
   };
 
   return (

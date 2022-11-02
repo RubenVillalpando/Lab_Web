@@ -10,7 +10,7 @@ export const GameCollectionAdd = ({ setIds }) => {
     if (!isNaN(numInput) && numInput > 0)
       setIds((ids) => [...new Set([textInput, ...ids])]);
     else window.alert("input must be a number");
-    e.target.value = ""
+    setTextInput("")
   };
 
   const handleInputChange = (e) => {
@@ -23,6 +23,7 @@ export const GameCollectionAdd = ({ setIds }) => {
         <input
           style={{ height: 3 + "rem", fontSize: 1.2 + "rem"}}
           type="text"
+          value={textInput}
           placeholder = "Introduce el ID de un juego (ej: 1)"
           onChange={handleInputChange}
           className="form-control"
