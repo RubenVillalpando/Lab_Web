@@ -18,17 +18,24 @@ export const GameSearch = () => {
 
   return (
     <>
-      <h1>¡Busca dentro de tu colección de juegos!</h1>
-      <input
-        type="text"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-      ></input>
-      <div className="d-flex flex-wrap justify-content-center">
-        {games.map((game) => {
-          return <GameSearchItem game={game} />;
-        })}
+      <div className="jumbotron jumbotron-fluid">
+        <div className="container">
+            <h1 className="display-4 py-4">¡Busca dentro de tu colección de juegos!</h1>
+            <input
+              style={{ height: 3 + "rem", fontSize: 1.2 + "rem", width: 100+ "%"}}
+              type="text"
+              value={query}
+              placeholder="Busca dentro de tu colección de juegos"
+              onChange={(e) => setQuery(e.target.value)}
+            ></input>
+            <div className="d-flex flex-wrap justify-content-center">
+              {games.map((game) => {
+                return <GameSearchItem game={game} />;
+              })}
+            </div>
+        </div>
       </div>
+      
     </>
   );
 };

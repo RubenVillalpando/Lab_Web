@@ -6,49 +6,49 @@ export const Navbar = () => {
   const { currentUser } = useContext(CurrentUserContext);
   return (
     <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
-      <Link className="navbar-brand" to="/">
-        Game Services
+      <Link className="navbar-brand p-3" to="/">
+        Games App
       </Link>
 
-      <div className="navbar-collapse">
+      <div className="navbar-collapse justify-content-start">
         <div className="navbar-nav">
           <NavLink
             className={({ isActive }) =>
-              isActive ? "active" : "nav-item nav-link"
+              isActive ? "active text-center px-3" : "nav-item nav-link px-2"
             }
             exact="true"
             to="/game-collection"
           >
-            Game Collection
+            Videojuegos
           </NavLink>
 
           <NavLink
             className={({ isActive }) =>
-              isActive ? "active" : "nav-item nav-link"
+              isActive ? "active text-center px-3" : "nav-item nav-link px-2"
             }
             exact="true"
             to="/game-search"
           >
-            Game Search
+            Mi colección
           </NavLink>
 
           <NavLink
             className={({ isActive }) =>
-              isActive ? "active" : "nav-item nav-link"
+              isActive ? "active text-center px-3" : "nav-item nav-link px-2"
             }
             exact="true"
             to="/game-genre"
           >
-            Games by Genre
+            Videojuegos por género
           </NavLink>
         </div>
       </div>
 
-      <div className="navbar-collapse collapse w-100 order-3 dual-collapse2">
-        <ul className="navbar-nav ml-auto">
+      <div className="navbar-collapse collapse justify-content-end">
+        <ul className="navbar-nav">
           <NavLink
             className={({ isActive }) =>
-              isActive ? "active" : "nav-item nav-link"
+              isActive ? "active text-center" : "nav-item nav-link px-5"
             }
             exact="true"
             to="/login"

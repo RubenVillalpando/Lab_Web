@@ -28,7 +28,7 @@ export const GameCollectionAdd = ({ setIds }) => {
           onChange={handleInputChange}
           className="form-control"
         />
-        <button className="btn btn-primary" type="submit" style={{fontSize: 1.2 + "rem", width: 6 + "rem"}}>Buscar</button>
+        <button className="btn btn-dark" type="submit" style={{fontSize: 1.2 + "rem", width: 6 + "rem"}}>Buscar</button>
       </div>
     </form>
   );

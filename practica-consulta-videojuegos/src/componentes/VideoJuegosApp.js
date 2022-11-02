@@ -15,7 +15,7 @@ export const VideojuegosApp = () => {
     <>
       <div className="jumbotron jumbotron-fluid">
         <div className="container">
-          <h1 className="display-4">Gamebook</h1>
+          <h1 className="display-4 py-4">Gamebook</h1>
           <p className="lead">
             ¡Bienvenido a la página donde podrás consultar información de
             videojuegos!

@@ -16,19 +16,33 @@ export const Login = () => {
   };
   return (
     <>
-      <p>Usuario:</p>
-      <input
-        type="text"
-        value={user}
-        onChange={(e) => setUser(e.target.value)}
-      ></input>
-      <p>Contraseña:</p>
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      ></input>
-      <button onClick={doLogin}>Log in</button>
+    <div className="container d-flex  flex-wrap flex-column align-items-center justify-content-center login-box"> 
+      <div className="row">
+        <h1 className="display-4 login-title">Inicia Sesión</h1>
+      </div>
+      <div className="row py-2">
+        <input
+            type="text"
+            value={user}
+            placeholder="Usuario"
+            onChange={(e) => setUser(e.target.value)}
+            className="input-box"
+          ></input>
+      </div>
+      <div className="row py-2">
+        <input
+            type="password"
+            value={password}
+            placeholder="Password"
+            onChange={(e) => setPassword(e.target.value)}
+            className="input-box"
+          ></input>
+      </div>
+        
+      <div className="row py-2">
+        <button className="btn btn-dark btn-login" onClick={doLogin}>¡Vamos!</button>
+      </div>
+    </div> 
     </>
   );
 };

@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 export const AgregaGenero = ({ setGeneros }) => {
   //En la variable inputValue siempre vamos a tener el último valor que el usuario escribió en
   // el input text.
-  const [inputValue, setInputValue] = useState("Indica el Género");
+  const [inputValue, setInputValue] = useState("");
 
   //Esta función se invoca cada vez que se detecta el evento onChange en el input text.
   const handleInputChange = (e) => {
@@ -42,9 +42,11 @@ export const AgregaGenero = ({ setGeneros }) => {
 
       <div className="input-group input-group-sm mb-3">
         <input
+          style={{ height: 3 + "rem", fontSize: 1.2 + "rem"}}
           type="text"
           value={inputValue}
           onChange={handleInputChange}
+          placeholder="Indica el Género"
           className="form-control"
         />
       </div>
