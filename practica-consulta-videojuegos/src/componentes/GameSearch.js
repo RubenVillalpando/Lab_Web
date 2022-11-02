@@ -3,7 +3,7 @@ import { GameSearchItem } from "./GameSearchItem";
 
 export const GameSearch = () => {
   let [query, setQuery] = useState("");
-  const WINDOW_GAMES = JSON.parse(window.localStorage.games);
+  const WINDOW_GAMES = JSON.parse(window.localStorage?.games || '[]');
   let [games, setGames] = useState(WINDOW_GAMES);
 
   useEffect(() => {
