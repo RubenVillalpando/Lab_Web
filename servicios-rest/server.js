@@ -1,5 +1,5 @@
 const express = require("express");
-const routes = require("./gameCollectionRoutes");
+const routes = require("./routes/gameCollectionRoutes");
 
 const app = express();
 

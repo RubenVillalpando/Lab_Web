@@ -1,6 +1,85 @@
 "use strict";
 
-var fs = require("fs");
+const MongoClient = require("mongodb").MongoClient;
+const url = "mongodb://127.0.0.1:27017";
+const dbName = "info_videojuegos";
+
+exports.obtener_juegos_usuario = function (req, res) {
+  MongoClient.connect(
+    url,
+    { useNewUrlParser: true, useUnifiedTopology: true },
+    async function (err, mdbclient) {
+      if (err) {
+        console.log(err);
+        res.status(500).end();
+      }
+
+      const database = mdbclient.db(dbName);
+
+      const videogames = database.collection("videogame_collection");
+      var user = req.params.username;
+
+      const query = { username: user };
+
+      const usuario = await videogames.find(query);
+      console.log("Consulta ejecutada...");
+      res.end(JSON.stringify(usuario));
+    }
+  );
+};
+
+exports.obtener_juego_por_nombre_usuario = function (req, res) {
+  MongoClient.connect(
+    url,
+    { useNewUrlParser: true, useUnifiedTopology: true },
+    async function (err, mdbclient) {
+      if (err) {
+        console.log(err);
+        res.status(500).end();
+      }
+
+      const database = mdbclient.db(dbName);
+
+      const videogames = database.collection("videogame_collection");
+      var user = req.params.username;
+      var gameName = req.params.nombre_juego;
+
+      const query = { username: user, nombre_juego: { $regex: gameName } };
+
+      const juego = await videogames.find(query);
+      console.log("Consulta ejecutada...");
+      res.end(JSON.stringify(juego));
+    }
+  );
+};
+
+exports.obtener_juegos_usuario_por_consola = function (req, res) {
+  MongoClient.connect(
+    url,
+    { useNewUrlParser: true, useUnifiedTopology: true },
+    async function (err, mdbclient) {
+      if (err) {
+        console.log(err);
+        res.status(500).end();
+      }
+
+      const database = mdbclient.db(dbName);
+
+      const videogames = database.collection("videogame_collection");
+      var user = req.params.username;
+      var consoleName = req.params.plataforma_juego;
+
+      const query = {
+        username: user,
+        plataforma_juego: { $regex: consoleName },
+      };
+
+      const juegos = await videogames.find(query);
+      console.log("Consulta ejecutada...");
+      res.end(JSON.stringify(juegos));
+    }
+  );
+};
 
 module.exports.obtener_juegos = function (req, res) {
   fs.readFile(

@@ -2,7 +2,7 @@
 "use strict";
 
 module.exports = function (app) {
-  const gameCollection = require("./gameCollectionController");
+  const gameCollection = require("../controllers/gameCollectionController");
 
   app
     .route("/games")
