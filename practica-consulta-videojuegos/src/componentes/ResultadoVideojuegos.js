@@ -4,7 +4,7 @@ import { InfoVideojuego } from "./InfoVideojuegos";
 
 export const ResultadoVideojuegos = (props) => {
   const url =
-    `https://api.rawg.io/api/games?key=${props.apiKey}&genres=` +
+    `https://api.rawg.io/api/games?key=${process.env.RAWG_API_KEY}&genres=` +
     encodeURI(props.genero);
   const { response, loading } = useFetch(url);
 

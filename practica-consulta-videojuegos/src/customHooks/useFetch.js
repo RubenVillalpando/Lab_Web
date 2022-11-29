@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+const BASE_URL = "";
+
 export const useFetch = (url, defaultComponent) => {
   const loadingComponent = defaultComponent || (
     <>

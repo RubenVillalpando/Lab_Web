@@ -41,6 +41,16 @@ export const Navbar = () => {
           >
             Videojuegos por género
           </NavLink>
+
+          <NavLink
+            className={({ isActive }) =>
+              isActive ? "active text-center px-3" : "nav-item nav-link px-2"
+            }
+            exact="true"
+            to="/logs"
+          >
+            Logs
+          </NavLink>
         </div>
       </div>
 

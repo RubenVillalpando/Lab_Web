@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useFetch } from "../customHooks/useFetch";
 
-export const GameCollectionItem = ({ id, ids, setIds, apiKey, games }) => {
-  const url = `https://api.rawg.io/api/games/${id}?key=${apiKey}`;
+export const GameCollectionItem = ({ id }) => {
+  const url = `https://api.rawg.io/api/games/${id}?key=${process.env.RAWG_API_KEY}`;
   const { response, loading } = useFetch(url);
 
   const {
@@ -21,15 +21,24 @@ export const GameCollectionItem = ({ id, ids, setIds, apiKey, games }) => {
         rating: response.rating,
         metacritic: response.metacritic,
       });
-      window.localStorage.setItem("games", JSON.stringify(games));
     }
   }, [response]);
 
   const handleDelete = (e) => {
-    console.log(ids);
-    setIds(ids.filter((id) => Number(id) !== Number(e.target.id)));
-    games = games.filter(game=>Number(game.id) !== Number(e.target.id))
-    window.localStorage.setItem("games", JSON.stringify(games))
+    fetch(`${process.env.DB_BASE_URL}/users`, {
+      method: "DELETE",
+      body: {
+        username: currentUser,
+        id_juego: e.target.id,
+      },
+    })
+      .then((res) => {
+        if (res.ok) console.log(`game with id ${e.target.id} deleted`);
+        else console.log(`Error: server responded with code ${res.status}`);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (

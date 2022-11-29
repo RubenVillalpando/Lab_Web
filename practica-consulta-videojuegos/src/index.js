@@ -1,7 +1,7 @@
 import React from "react";
-import { createRoot } from "react-dom/client";
-import { MainRouter } from "./routers/MainRouter";
+import {createRoot} from "react-dom/client";
+import {MainRouter} from "./routers/MainRouter";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
-root.render(<MainRouter />);
+root.render(<MainRouter/>);

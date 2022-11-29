@@ -3,13 +3,7 @@ import { AgregaGenero } from "./AgregaGenero";
 import { ResultadoVideojuegos } from "./ResultadoVideojuegos";
 
 export const VideojuegosApp = () => {
-  //Utilizamos el hook useState para inicializar la lista de generos de videojuegos.
-
   const [generos, setGeneros] = useState([]);
-
-  {
-    /*Se elimina la función agregaGenero*/
-  }
 
   return (
     <>
@@ -20,22 +14,9 @@ export const VideojuegosApp = () => {
             ¡Bienvenido a la página donde podrás consultar información de
             videojuegos!
           </p>
-          {/* 
-                    Creamos una propiedad 'setGeneros' al componente AgregaGenero y le pasamos como valor la 
-                    referencia de la función 'setGeneros' que obtuvimos en la desestructuración del useState 
-                    */}
           <AgregaGenero setGeneros={setGeneros} />
-
-          {/*Se eliminó el botón*/}
-
-          {/* 
-                    Creamos la lista de géneros 
-                    */}
           <div className="d-flex flex-wrap">
             {generos.map((genero) => {
-              //Reemplazamos el elemento <li> por la llamda al componente ResultadoVideojuegos, pasando
-              // como parámetro el género. Se tiene que utilizar la propiedad key al igual que se hizo
-              // con el elemento <li> anteriormente
               return (
                 <ResultadoVideojuegos
                   key={genero}

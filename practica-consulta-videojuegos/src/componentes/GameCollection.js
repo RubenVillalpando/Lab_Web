@@ -1,23 +1,31 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GameCollectionItem } from "./GameCollectionItem";
+import { CurrentUserContext } from "../customHooks/CurrentUserContext";
 
-export const GameCollection = (props) => {
-  console.log(props);
-  const games = JSON.parse(window.localStorage.getItem("games")) || [];
+export const GameCollection = () => {
+  let { currentUser } = useContext(CurrentUserContext);
+  const [games, setGames] = useState([]);
+  useEffect(() => {
+    fetch(`${process.env.DB_BASE_URL}/games`, {
+      method: "get",
+      body: {
+        username: currentUser,
+      },
+    })
+      .then((res) => {
+        res.json().then((json) => setGames(json));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
   return (
     <>
       <div className="d-flex flex-wrap justify-content-center">
-        {props.ids.map((id) => {
+        {games.map((game) => {
           return (
             <>
-              <GameCollectionItem
-                key={id}
-                id={id}
-                setIds={props.setIds}
-                ids={props.ids}
-                apiKey={props.apiKey}
-                games={games}
-              />
+              <GameCollectionItem id={game.id_juego} />
             </>
           );
         })}
