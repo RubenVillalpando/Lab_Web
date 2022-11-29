@@ -29,6 +29,7 @@ export const GameCollectionItem = ({ id }) => {
   const handleDelete = (e) => {
     fetch(`mongodb://127.0.0.1:27017/users`, {
       method: "DELETE",
+      mode: "cors",
       body: {
         username: currentUser,
         id_juego: e.target.id,

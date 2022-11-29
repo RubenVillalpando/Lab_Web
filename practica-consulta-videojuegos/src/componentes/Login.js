@@ -9,12 +9,16 @@ export const Login = () => {
   let { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 
   const doLogin = () => {
-    fetch(`mongodb://127.0.0.1:27017/users/login`, {
-      method: "GET",
-      body: {
-        email,
-        password,
-      },
+    console.log(email);
+    console.log(password);
+    const requestBody = { email: email, password: password };
+    const myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+    fetch("http://127.0.0.1:8585/users/login", {
+      method: "POST",
+      mode: "cors",
+      headers: myHeaders,
+      body: JSON.stringify(requestBody),
     })
       .then((res) => {
         if (res.ok) {

@@ -1,3 +1,4 @@
+const cors = require("cors");
 const express = require("express");
 const routes = require("./routes/routes");
 
@@ -12,6 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 //Este middleware nos sirve para recuperar el contenido del
 //body del request y response.
 app.use(express.json());
+app.use(cors());
 
 //Llamamos nuestras rutas.
 routes(app);

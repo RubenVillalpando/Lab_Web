@@ -20,6 +20,7 @@ export const GameCollectionAdd = () => {
           res.json().then((game) => {
             fetch(`mongodb://127.0.0.1:27017/games`, {
               method: "POST",
+              mode: "cors",
               body: {
                 username: currentUser,
                 id_juego: textInput,
