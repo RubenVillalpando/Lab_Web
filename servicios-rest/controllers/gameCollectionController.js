@@ -17,7 +17,7 @@ exports.obtener_juegos_usuario = function (req, res) {
       const database = mdbclient.db(dbName);
 
       const videogames = database.collection("videogame_collection");
-      var user = req.params.username;
+      let user = req.body.username;
 
       const query = { username: user };
 
@@ -41,8 +41,8 @@ exports.obtener_juego_por_nombre_usuario = function (req, res) {
       const database = mdbclient.db(dbName);
 
       const videogames = database.collection("videogame_collection");
-      var user = req.params.username;
-      var gameName = req.params.nombre_juego;
+      let user = req.body.username;
+      let gameName = req.body.nombre_juego;
 
       const query = { username: user, nombre_juego: { $regex: gameName } };
 
@@ -53,7 +53,7 @@ exports.obtener_juego_por_nombre_usuario = function (req, res) {
   );
 };
 
-exports.obtener_juegos_usuario_por_consola = function (req, res) {
+exports.obtener_juegos_por_consola_usuario = function (req, res) {
   MongoClient.connect(
     url,
     { useNewUrlParser: true, useUnifiedTopology: true },
@@ -66,8 +66,8 @@ exports.obtener_juegos_usuario_por_consola = function (req, res) {
       const database = mdbclient.db(dbName);
 
       const videogames = database.collection("videogame_collection");
-      var user = req.params.username;
-      var consoleName = req.params.plataforma_juego;
+      let user = req.body.username;
+      let consoleName = req.body.plataforma_juego;
 
       const query = {
         username: user,
@@ -81,133 +81,162 @@ exports.obtener_juegos_usuario_por_consola = function (req, res) {
   );
 };
 
-module.exports.obtener_juegos = function (req, res) {
-  fs.readFile(
-    __dirname + "/" + "juegos.json",
-    { encoding: "utf-8" },
-    function (err, data) {
+exports.agregar_juego_usuario = function (req, res) {
+  MongoClient.connect(
+    url,
+    { useNewUrlParser: true, useUnifiedTopology: true },
+    async function (err, mdbclient) {
       if (err) {
         console.log(err);
         res.status(500).end();
-      } else {
-        console.log(data);
-        res.send(data);
       }
+
+      const database = mdbclient.db(dbName);
+
+      const videogames = database.collection("videogame_collection");
+      let user = req.body.username;
+      let gameID = req.body.id_juego;
+      let gameName = req.body.nombre_juego;
+      let consoleName = req.body.plataforma_juego;
+      let comment = req.body.comentario;
+
+      await videogames.insertOne({
+        username: user,
+        id_juego: gameID,
+        nombre_juego: gameName,
+        plataforma_juego: consoleName,
+        comentario: comment,
+      });
+      console.log("Juego registrado...");
+      res.status(200).end();
     }
   );
 };
 
-module.exports.agregar_juego = function (req, res) {
-  fs.readFile(
-    __dirname + "/" + "juegos.json",
-    { encoding: "utf-8" },
-    function (err, data) {
-      if (err) {
-        console.log("error leyendo el archivo juegos.json", err);
-        res.status(500).end();
-      } else {
-        const array = JSON.parse(data);
-        console.log(data);
+// module.exports.obtener_juegos = function (req, res) {
+//   fs.readFile(
+//     __dirname + "/" + "juegos.json",
+//     { encoding: "utf-8" },
+//     function (err, data) {
+//       if (err) {
+//         console.log(err);
+//         res.status(500).end();
+//       } else {
+//         console.log(data);
+//         res.send(data);
+//       }
+//     }
+//   );
+// };
 
-        const nuevo = req.body;
-        array.push(nuevo);
+// module.exports.agregar_juego = function (req, res) {
+//   fs.readFile(
+//     __dirname + "/" + "juegos.json",
+//     { encoding: "utf-8" },
+//     function (err, data) {
+//       if (err) {
+//         console.log("error leyendo el archivo juegos.json", err);
+//         res.status(500).end();
+//       } else {
+//         const array = JSON.parse(data);
+//         console.log(data);
 
-        fs.writeFile(
-          __dirname + "/" + "juegos.json",
-          JSON.stringify(array),
-          "utf8",
-          function (err, data) {
-            console.log(err);
-            res.end(err);
-          }
-        );
+//         const nuevo = req.body;
+//         array.push(nuevo);
 
-        res.end(JSON.stringify(array));
-      }
-    }
-  );
-};
+//         fs.writeFile(
+//           __dirname + "/" + "juegos.json",
+//           JSON.stringify(array),
+//           "utf8",
+//           function (err, data) {
+//             console.log(err);
+//             res.end(err);
+//           }
+//         );
 
-module.exports.obtener_juego = function (req, res) {
-  fs.readFile(
-    __dirname + "/" + "juegos.json",
-    { encoding: "utf-8" },
-    function (err, data) {
-      if (err) {
-        console.log("error leyendo el archivo juegos.json", err);
-        res.status(500).end();
-      } else {
-        const juegos = JSON.parse(data);
-        const juego = juegos[req.params.gameIndex];
-        console.log(juego);
-        res.send(JSON.stringify(juego));
-      }
-    }
-  );
-};
+//         res.end(JSON.stringify(array));
+//       }
+//     }
+//   );
+// };
 
-module.exports.borrar_juego = function (req, res) {
-  fs.readFile(
-    __dirname + "/" + "juegos.json",
-    { encoding: "utf-8" },
-    function (err, data) {
-      console.log("El juego a borrar es el juego con id: ", req.params.gameId);
-      if (err) {
-        console.log("error leyendo el archivo juegos.json", err);
-        res.status(500).end();
-      } else {
-        const juegos = JSON.parse(data);
-        const juegoPorBorrar = juegos.find(
-          (juego) => juego.id === req.params.gameId
-        );
-        if (!juegoPorBorrar) {
-          console.log("no se encontró el juego con id: ", req.params.gameId);
-        }
-        fs.writeFile(
-          __dirname + "/" + "juegos.json",
-          JSON.stringify(
-            juegos.filter((juego) => juego.id !== req.params.gameId)
-          ),
-          {
-            encoding: "utf-8",
-          },
-          function (err, data) {
-            if (err) {
-              console.log("error encountered:", err);
-              res.status(500).end();
-            } else {
-              console.log("se borró el juego:", juegoPorBorrar);
-              res.status(200).json(juegoPorBorrar || {});
-            }
-          }
-        );
-      }
-    }
-  );
-};
+// module.exports.obtener_juego = function (req, res) {
+//   fs.readFile(
+//     __dirname + "/" + "juegos.json",
+//     { encoding: "utf-8" },
+//     function (err, data) {
+//       if (err) {
+//         console.log("error leyendo el archivo juegos.json", err);
+//         res.status(500).end();
+//       } else {
+//         const juegos = JSON.parse(data);
+//         const juego = juegos[req.body.gameIndex];
+//         console.log(juego);
+//         res.send(JSON.stringify(juego));
+//       }
+//     }
+//   );
+// };
 
-module.exports.buscar_juegos = function (req, res) {
-  fs.readFile(
-    __dirname + "/" + "juegos.json",
-    { encoding: "utf-8" },
-    function (err, data) {
-      console.log("El query a buscar es: ", req.params.query);
-      if (err) {
-        console.log("error leyendo el archivo juegos.json", err);
-        res.status(500).end();
-      } else {
-        let juegos = JSON.parse(data);
-        let juegosEncontrados = juegos.filter((juego) =>
-          juego.nombre.includes(req.params.query)
-        );
-        if (!juegosEncontrados.length) {
-          console.log(
-            "Ningún juego se encontró con el query:",
-            req.params.query
-          );
-        }
-        res.json(juegosEncontrados);
-      }
-    }
-  );
-};
+// module.exports.borrar_juego = function (req, res) {
+//   fs.readFile(
+//     __dirname + "/" + "juegos.json",
+//     { encoding: "utf-8" },
+//     function (err, data) {
+//       console.log("El juego a borrar es el juego con id: ", req.body.gameId);
+//       if (err) {
+//         console.log("error leyendo el archivo juegos.json", err);
+//         res.status(500).end();
+//       } else {
+//         const juegos = JSON.parse(data);
+//         const juegoPorBorrar = juegos.find(
+//           (juego) => juego.id === req.body.gameId
+//         );
+//         if (!juegoPorBorrar) {
+//           console.log("no se encontró el juego con id: ", req.body.gameId);
+//         }
+//         fs.writeFile(
+//           __dirname + "/" + "juegos.json",
+//           JSON.stringify(
+//             juegos.filter((juego) => juego.id !== req.body.gameId)
+//           ),
+//           {
+//             encoding: "utf-8",
+//           },
+//           function (err, data) {
+//             if (err) {
+//               console.log("error encountered:", err);
+//               res.status(500).end();
+//             } else {
+//               console.log("se borró el juego:", juegoPorBorrar);
+//               res.status(200).json(juegoPorBorrar || {});
+//             }
+//           }
+//         );
+//       }
+//     }
+//   );
+// };
+
+// module.exports.buscar_juegos = function (req, res) {
+//   fs.readFile(
+//     __dirname + "/" + "juegos.json",
+//     { encoding: "utf-8" },
+//     function (err, data) {
+//       console.log("El query a buscar es: ", req.body.query);
+//       if (err) {
+//         console.log("error leyendo el archivo juegos.json", err);
+//         res.status(500).end();
+//       } else {
+//         let juegos = JSON.parse(data);
+//         let juegosEncontrados = juegos.filter((juego) =>
+//           juego.nombre.includes(req.body.query)
+//         );
+//         if (!juegosEncontrados.length) {
+//           console.log("Ningún juego se encontró con el query:", req.body.query);
+//         }
+//         res.json(juegosEncontrados);
+//       }
+//     }
+//   );
+// };
