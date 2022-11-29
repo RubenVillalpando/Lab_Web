@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { CurrentUserContext } from "../customHooks/CurrentUserContext";
 
 export const Logs = () => {
-  [logs, setLogs] = useState([]);
+  const { currentUser } = useContext(CurrentUserContext);
+  const [logs, setLogs] = useState([]);
 
   useEffect(
     fetch(`${process.env.DB_BASE_URL}/logs`, {

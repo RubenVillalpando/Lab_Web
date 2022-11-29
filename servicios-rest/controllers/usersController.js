@@ -17,9 +17,24 @@ exports.obtener_usuario_email = function (req, res) {
 
       const users = database.collection("users");
       let email = req.body.correo_electrónico;
+      let password = req.body.contraseña;
 
-      const query = { correo_electrónico: email };
-      const usuario = await users.find(query);
+      const query = { correo_electrónico: email, contraseña: password };
+      const usuario = await users.findOne(query);
+      const logs = database.collection("logs");
+      if (usuario == null) {
+        await logs.insertOne({
+          username: email,
+          fecha_evento: new Date(),
+          evento: "Autenticación fallida...",
+        });
+        return res.status(404).end();
+      }
+      await logs.insertOne({
+        username: usuario.username,
+        fecha_evento: new Date(),
+        evento: "Autenticación exitosa...",
+      });
       console.log("Consulta ejecutada...");
       res.json(usuario);
     }

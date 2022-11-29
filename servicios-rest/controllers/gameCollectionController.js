@@ -107,6 +107,12 @@ exports.agregar_juego_usuario = function (req, res) {
         plataforma_juego: consoleName,
         comentario: comment,
       });
+      const logs = database.collection("logs");
+      await logs.insertOne({
+        username: user,
+        fecha_evento: new Date(),
+        evento: "Juego agregado...",
+      });
       console.log("Juego registrado...");
       res.status(200).end();
     }

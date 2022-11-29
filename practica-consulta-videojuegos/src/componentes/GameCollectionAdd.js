@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useFetch } from "../customHooks/useFetch";
+import { CurrentUserContext } from "../customHooks/CurrentUserContext";
 
 export const GameCollectionAdd = () => {
+  const { currentUser } = useContext(CurrentUserContext);
   const [textInput, setTextInput] = useState();
   const handleSubmit = (e) => {
     e.preventDefault();

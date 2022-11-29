@@ -1,7 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useFetch } from "../customHooks/useFetch";
+import { CurrentUserContext } from "../customHooks/CurrentUserContext";
 
 export const GameCollectionItem = ({ id }) => {
+  const { currentUser } = useContext(CurrentUserContext);
   const url = `https://api.rawg.io/api/games/${id}?key=${process.env.RAWG_API_KEY}`;
   const { response, loading } = useFetch(url);
 
@@ -12,17 +14,17 @@ export const GameCollectionItem = ({ id }) => {
     metacritic,
   } = response || {};
 
-  useEffect(() => {
-    if (response && !games.some((game) => game.id == response?.id)) {
-      games.push({
-        id: response.id,
-        nombre: response.name,
-        imagen: response.background_image,
-        rating: response.rating,
-        metacritic: response.metacritic,
-      });
-    }
-  }, [response]);
+  // useEffect(() => {
+  //   if (response) {
+  //     games.push({
+  //       id: response.id,
+  //       nombre: response.name,
+  //       imagen: response.background_image,
+  //       rating: response.rating,
+  //       metacritic: response.metacritic,
+  //     });
+  //   }
+  // }, [response]);
 
   const handleDelete = (e) => {
     fetch(`${process.env.DB_BASE_URL}/users`, {
