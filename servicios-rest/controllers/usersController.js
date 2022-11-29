@@ -16,11 +16,9 @@ exports.obtener_usuario_email = function (req, res) {
       const database = mdbclient.db(dbName);
 
       const users = database.collection("users");
-      let email = req.body.email;
+      const { email, password } = req.body;
       console.log(email);
       console.log(req.body);
-
-      let password = req.body.password;
 
       const query = { correo_electrónico: email, contraseña: password };
       const usuario = await users.findOne(query);

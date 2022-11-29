@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { json, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { CurrentUserContext } from "../customHooks/CurrentUserContext";
 
 export const Login = () => {
@@ -11,13 +11,14 @@ export const Login = () => {
   const doLogin = () => {
     console.log(email);
     console.log(password);
-    fetch(`http://127.0.0.1:8585/users/login`, {
+    const requestBody = { email: email, password: password };
+    const myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+    fetch("http://127.0.0.1:8585/users/login", {
       method: "POST",
-      mode: "no-cors",
-      body: JSON.stringify({
-        email,
-        password,
-      }),
+      mode: "cors",
+      headers: myHeaders,
+      body: JSON.stringify(requestBody),
     })
       .then((res) => {
         if (res.ok) {
