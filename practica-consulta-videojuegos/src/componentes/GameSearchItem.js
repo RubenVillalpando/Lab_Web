@@ -3,7 +3,7 @@ import { useFetch } from "../customHooks/useFetch";
 
 export const GameSearchItem = ({ game }) => {
   let { nombre_juego, id_juego } = game;
-  const url = `https://api.rawg.io/api/games/${id_juego}?key=${process.env.RAWG_API_KEY}`;
+  const url = `https://api.rawg.io/api/games/${id_juego}?key=d9080123cda745c2880f8f8322939d72`;
   let { response, loading } = useFetch(url);
 
   return (

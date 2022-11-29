@@ -11,15 +11,16 @@ export const GameCollectionAdd = () => {
     let numInput = Number(textInput);
     if (!isNaN(numInput) && numInput > 0) {
       fetch(
-        `https://api.rawg.io/api/games/${numInput}?key=${process.env.RAWG_API_KEY}`,
+        `https://api.rawg.io/api/games/${numInput}?key=d9080123cda745c2880f8f8322939d72`,
         {
           method: "GET",
         }
       )
         .then((res) => {
           res.json().then((game) => {
-            fetch(`${process.env.DB_BASE_URL}/games`, {
+            fetch(`mongodb://127.0.0.1:27017/games`, {
               method: "POST",
+              mode: "cors",
               body: {
                 username: currentUser,
                 id_juego: textInput,

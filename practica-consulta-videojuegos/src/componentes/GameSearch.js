@@ -8,7 +8,7 @@ export const GameSearch = () => {
   let [games, setGames] = useState([]);
 
   useEffect(() => {
-    fetch(`${process.env.DB_BASE_URL}/games/search-game-name`, {
+    fetch(`mongodb://127.0.0.1:27017/games/search-game-name`, {
       method: "GET",
       body: {
         username: currentUser,

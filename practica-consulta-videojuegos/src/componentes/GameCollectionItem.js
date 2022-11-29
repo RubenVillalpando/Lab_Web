@@ -4,7 +4,7 @@ import { CurrentUserContext } from "../customHooks/CurrentUserContext";
 
 export const GameCollectionItem = ({ id }) => {
   const { currentUser } = useContext(CurrentUserContext);
-  const url = `https://api.rawg.io/api/games/${id}?key=${process.env.RAWG_API_KEY}`;
+  const url = `https://api.rawg.io/api/games/${id}?key=d9080123cda745c2880f8f8322939d72`;
   const { response, loading } = useFetch(url);
 
   const {
@@ -27,8 +27,9 @@ export const GameCollectionItem = ({ id }) => {
   // }, [response]);
 
   const handleDelete = (e) => {
-    fetch(`${process.env.DB_BASE_URL}/users`, {
+    fetch(`mongodb://127.0.0.1:27017/users`, {
       method: "DELETE",
+      mode: "cors",
       body: {
         username: currentUser,
         id_juego: e.target.id,
