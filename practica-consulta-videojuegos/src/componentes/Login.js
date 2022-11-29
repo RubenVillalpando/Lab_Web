@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { json, useNavigate } from "react-router-dom";
 import { CurrentUserContext } from "../customHooks/CurrentUserContext";
 
 export const Login = () => {
@@ -9,12 +9,15 @@ export const Login = () => {
   let { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 
   const doLogin = () => {
-    fetch(`${process.env.DB_BASE_URL}/users/login`, {
-      method: "GET",
-      body: {
+    console.log(email);
+    console.log(password);
+    fetch(`http://127.0.0.1:8585/users/login`, {
+      method: "POST",
+      mode: "no-cors",
+      body: JSON.stringify({
         email,
         password,
-      },
+      }),
     })
       .then((res) => {
         if (res.ok) {

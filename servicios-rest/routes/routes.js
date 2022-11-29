@@ -21,7 +21,7 @@ module.exports = function (app) {
 
   // app.route("/games/search/:query").get(gameCollection.buscar_juegos);
 
-  app.route("/users").get(users.obtener_usuario_email);
+  app.route("/users/login").post(users.obtener_usuario_email);
 
   app.route("/logs").get(logs.obtener_logs_usuario);
   app.route("/logs").post(logs.agregar_evento);

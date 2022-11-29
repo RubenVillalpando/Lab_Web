@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { GameSearchItem } from "./GameSearchItem";
 import { CurrentUserContext } from "../customHooks/CurrentUserContext";
-import * as env from "dotenv";
 
 export const GameSearch = () => {
   const { currentUser } = useContext(CurrentUserContext);

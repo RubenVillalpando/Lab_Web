@@ -16,13 +16,16 @@ exports.obtener_usuario_email = function (req, res) {
       const database = mdbclient.db(dbName);
 
       const users = database.collection("users");
-      let email = req.body.correo_electrónico;
-      let password = req.body.contraseña;
+      let email = req.body.email;
+      console.log(email);
+      console.log(req.body);
+
+      let password = req.body.password;
 
       const query = { correo_electrónico: email, contraseña: password };
       const usuario = await users.findOne(query);
       const logs = database.collection("logs");
-      if (usuario == null) {
+      if (usuario === null) {
         await logs.insertOne({
           username: email,
           fecha_evento: new Date(),

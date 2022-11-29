@@ -1,10 +1,11 @@
 const express = require("express");
 const routes = require("./routes/routes");
-
+const bodyParser = require("body-parser");
 const app = express();
 
 const port = 8585;
 
+app.use(bodyParser.json());
 //Middlewares
 //Este middleware sirve para parsear el contenido de los requests
 //que están "url encoded"
