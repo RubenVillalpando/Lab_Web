@@ -17,7 +17,7 @@ exports.obtener_juegos_usuario = function (req, res) {
       const database = mdbclient.db(dbName);
 
       const videogames = database.collection("videogame_collection");
-      let user = req.body.username;
+      let user = req.params.username;
 
       const query = { username: user };
 
@@ -41,8 +41,8 @@ exports.obtener_juego_por_nombre_usuario = function (req, res) {
       const database = mdbclient.db(dbName);
 
       const videogames = database.collection("videogame_collection");
-      let user = req.body.username;
-      let gameName = req.body.nombre_juego;
+      let user = req.params.username;
+      let gameName = req.params.nombre_juego;
 
       const query = { username: user, nombre_juego: { $regex: gameName } };
 
@@ -66,8 +66,8 @@ exports.obtener_juegos_por_consola_usuario = function (req, res) {
       const database = mdbclient.db(dbName);
 
       const videogames = database.collection("videogame_collection");
-      let user = req.body.username;
-      let consoleName = req.body.plataforma_juego;
+      let user = req.params.username;
+      let consoleName = req.params.plataforma_juego;
 
       const query = {
         username: user,
@@ -114,6 +114,34 @@ exports.agregar_juego_usuario = function (req, res) {
         evento: "Juego agregado...",
       });
       console.log("Juego registrado...");
+      res.status(200).end();
+    }
+  );
+};
+
+exports.borrar_juego = function (req, res) {
+  MongoClient.connect(
+    url,
+    { useNewUrlParser: true, useUnifiedTopology: true },
+    async function (err, mdbclient) {
+      if (err) {
+        console.log(err);
+        res.status(500).end();
+      }
+
+      const database = mdbclient.db(dbName);
+      const videogames = database.collection("videogame_collection");
+      let user = req.body.username;
+      let gameID = req.body.id_juego;
+
+      await videogames.deleteOne({ username: user, id_juego: gameID });
+      const logs = database.collection("logs");
+      await logs.insertOne({
+        username: user,
+        fecha_evento: new Date(),
+        evento: "Juego eliminado...",
+      });
+      console.log("Juego eliminado...");
       res.status(200).end();
     }
   );

@@ -92,11 +92,12 @@ exports.agregar_evento = function (req, res) {
       let user = req.body.username;
       let event = req.body.evento;
 
-      await logs.insertOne({
+        await logs.insertOne({
         username: user,
         fecha_evento: new Date(),
         evento: event,
       });
+
       console.log("Evento registrado...");
       res.status(200).end();
     }
