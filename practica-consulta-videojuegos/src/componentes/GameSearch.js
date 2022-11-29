@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { GameSearchItem } from "./GameSearchItem";
 import { CurrentUserContext } from "../customHooks/CurrentUserContext";
-import * as env from "dotenv";
 
 export const GameSearch = () => {
   const { currentUser } = useContext(CurrentUserContext);
@@ -9,7 +8,7 @@ export const GameSearch = () => {
   let [games, setGames] = useState([]);
 
   useEffect(() => {
-    fetch(`${process.env.DB_BASE_URL}/games/search-game-name`, {
+    fetch(`mongodb://127.0.0.1:27017/games/search-game-name`, {
       method: "GET",
       body: {
         username: currentUser,

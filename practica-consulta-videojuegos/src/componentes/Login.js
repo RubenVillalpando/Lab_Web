@@ -9,7 +9,7 @@ export const Login = () => {
   let { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 
   const doLogin = () => {
-    fetch(`${process.env.DB_BASE_URL}/users/login`, {
+    fetch(`mongodb://127.0.0.1:27017/users/login`, {
       method: "GET",
       body: {
         email,

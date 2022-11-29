@@ -6,7 +6,7 @@ export const Logs = () => {
   const [logs, setLogs] = useState([]);
 
   useEffect(
-    fetch(`${process.env.DB_BASE_URL}/logs`, {
+    fetch(`mongodb://127.0.0.1:27017/logs`, {
       method: "GET",
       body: {
         username: currentUser,

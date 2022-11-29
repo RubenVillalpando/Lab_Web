@@ -6,7 +6,7 @@ export const GameCollection = () => {
   let { currentUser } = useContext(CurrentUserContext);
   const [games, setGames] = useState([]);
   useEffect(() => {
-    fetch(`${process.env.DB_BASE_URL}/games`, {
+    fetch(`mongodb://127.0.0.1:27017/games`, {
       method: "get",
       body: {
         username: currentUser,
