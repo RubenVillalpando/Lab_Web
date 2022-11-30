@@ -21,8 +21,10 @@ module.exports = function (app) {
 
   app.route("/logs/:username").get(logs.obtener_logs_usuario);
   app.route("/logs").post(logs.agregar_evento);
-  app.route("/logs/search-event").get(logs.obtener_logs_usuario_evento);
-  app.route("/logs/serach-date-range").get(logs.obtener_logs_rango_fechas);
+  app
+    .route("/logs/search-event/:username")
+    .get(logs.obtener_logs_usuario_evento);
+  app.route("/logs/v1/search-date-range").get(logs.obtener_logs_rango_fechas);
 
   // app.route("/games/:gameIndex").get(gameCollection.obtener_juego);
 

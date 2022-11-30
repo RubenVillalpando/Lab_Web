@@ -61,14 +61,14 @@ export const Navbar = () => {
               isActive ? "active text-center" : "nav-item nav-link px-5"
             }
             exact="true"
-            to="/login"
+            to="/"
           >
             Salir
           </NavLink>
           {currentUser ? (
-            <h2 className="text-white"></h2>
+            <h3 className="text-white">{currentUser}</h3>
           ) : (
-            <h2 className="text-white">{currentUser}</h2>
+            <h2 className="text-white"></h2>
           )}
         </ul>
       </div>

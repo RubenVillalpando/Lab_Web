@@ -39,19 +39,19 @@ exports.obtener_logs_rango_fechas = function (req, res) {
       const database = mdbclient.db(dbName);
 
       const logs = database.collection("logs");
-      let date1 = req.body.fecha_evento1;
-      let date2 = req.body.fecha_evento2;
+      let date1 = req.query.fecha_evento1;
+      let date2 = req.query.fecha_evento2;
 
       const query = {
         fecha_evento: {
-          $gte: ISODate(date1),
-          $lt: ISODate(date2),
+          $gte: new Date(date1),
+          $lt: new Date(date2),
         },
       };
 
       const result = await logs.find(query);
       console.log("Consulta ejecutada...");
-      return res.end(await result.toArray());
+      return res.json(await result.toArray());
     }
   );
 };
@@ -68,13 +68,16 @@ exports.obtener_logs_usuario_evento = function (req, res) {
       const database = mdbclient.db(dbName);
 
       const logs = database.collection("logs");
-      let user = req.body.username;
-      let event = req.body.evento;
+      let user = req.params.username;
+      let event = req.query.evento;
 
-      const query = { username: user, evento: { $regex: event } };
+      const query = {
+        username: user,
+        evento: { $regex: new RegExp(event, "i") },
+      };
       const usuario = await logs.find(query);
       console.log("Consulta ejecutada...");
-      return res.end(await usuario.toArray());
+      return res.json(await usuario.toArray());
     }
   );
 };

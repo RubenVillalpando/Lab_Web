@@ -22,9 +22,9 @@ export const Logs = () => {
       <table>
         <thead>
           <tr>
-            <th>Usuario</th>
-            <th>Evento</th>
-            <th>Fecha</th>
+            <th className="text-center">Usuario</th>
+            <th className="text-center">Evento</th>
+            <th className="text-center">Fecha</th>
           </tr>
         </thead>
         <tbody>

@@ -48,6 +48,7 @@ export const GameCollectionAdd = ({ games, setGames }) => {
             })
               .then((res) => {
                 if (res.ok) {
+                  setGames([]);
                   console.log("added game successfully");
                 } else {
                   console.log(`Error: unexpected status ${res.status}`);
