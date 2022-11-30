@@ -27,13 +27,15 @@ export const GameCollectionItem = ({ id }) => {
   // }, [response]);
 
   const handleDelete = (e) => {
-    fetch(`mongodb://127.0.0.1:27017/users`, {
+    // const myHeaders = new Headers();
+    // myHeaders.append("Content-Type", "application/json");
+    fetch(`http://127.0.0.1:8585/games`, {
       method: "DELETE",
       mode: "cors",
-      body: {
+      body: JSON.stringify({
         username: currentUser,
         id_juego: e.target.id,
-      },
+      }),
     })
       .then((res) => {
         if (res.ok) console.log(`game with id ${e.target.id} deleted`);

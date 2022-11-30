@@ -18,7 +18,6 @@ exports.obtener_usuario_email = function (req, res) {
       const users = database.collection("users");
       const { email, password } = req.body;
       console.log(email);
-      console.log(req.body);
 
       const query = { correo_electrónico: email, contraseña: password };
       const usuario = await users.findOne(query);

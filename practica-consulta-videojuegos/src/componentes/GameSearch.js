@@ -8,12 +8,17 @@ export const GameSearch = () => {
   let [games, setGames] = useState([]);
 
   useEffect(() => {
-    fetch(`mongodb://127.0.0.1:27017/games/search-game-name`, {
-      method: "GET",
-      body: {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    setGames([]);
+    fetch(`http://127.0.0.1:8585/games/search-game-name`, {
+      method: "POST",
+      mode: "cors",
+      headers: myHeaders,
+      body: JSON.stringify({
         username: currentUser,
         nombre_juego: query,
-      },
+      }),
     })
       .then((res) => {
         res.json().then((json) => setGames(json));

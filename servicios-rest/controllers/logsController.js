@@ -11,17 +11,18 @@ exports.obtener_logs_usuario = function (req, res) {
     async function (err, mdbclient) {
       if (err) {
         console.log(err);
-        res.status(500).end();
+        return res.status(500).end();
       }
       const database = mdbclient.db(dbName);
 
       const logs = database.collection("logs");
-      let user = req.body.username;
+      let user = req.params.username;
 
       const query = { username: user };
+
       const usuario = await logs.find(query);
       console.log("Consulta ejecutada...");
-      res.end(JSON.stringify(usuario));
+      return res.json(await usuario.toArray());
     }
   );
 };
@@ -50,7 +51,7 @@ exports.obtener_logs_rango_fechas = function (req, res) {
 
       const result = await logs.find(query);
       console.log("Consulta ejecutada...");
-      res.end(JSON.stringify(result));
+      return res.end(await result.toArray());
     }
   );
 };
@@ -62,7 +63,7 @@ exports.obtener_logs_usuario_evento = function (req, res) {
     async function (err, mdbclient) {
       if (err) {
         console.log(err);
-        res.status(500).end();
+        return res.status(500).end();
       }
       const database = mdbclient.db(dbName);
 
@@ -73,7 +74,7 @@ exports.obtener_logs_usuario_evento = function (req, res) {
       const query = { username: user, evento: { $regex: event } };
       const usuario = await logs.find(query);
       console.log("Consulta ejecutada...");
-      res.end(JSON.stringify(usuario));
+      return res.end(await usuario.toArray());
     }
   );
 };
@@ -92,7 +93,7 @@ exports.agregar_evento = function (req, res) {
       let user = req.body.username;
       let event = req.body.evento;
 
-        await logs.insertOne({
+      await logs.insertOne({
         username: user,
         fecha_evento: new Date(),
         evento: event,

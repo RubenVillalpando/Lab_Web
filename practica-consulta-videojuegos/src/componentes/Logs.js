@@ -5,8 +5,8 @@ export const Logs = () => {
   const { currentUser } = useContext(CurrentUserContext);
   const [logs, setLogs] = useState([]);
 
-  useEffect(
-    fetch(`mongodb://127.0.0.1:27017/logs/${currentUser}`, {
+  useEffect(() => {
+    fetch(`http://127.0.0.1:8585/logs/${currentUser}`, {
       method: "GET",
     })
       .then((res) => {
@@ -14,27 +14,30 @@ export const Logs = () => {
       })
       .catch((error) => {
         console.log(error);
-      }),
-    []
-  );
+      });
+  }, []);
 
   return (
     <>
       <table>
-        <tr>
-          <th>Usuario</th>
-          <th>Evento</th>
-          <th>Fecha</th>
-        </tr>
-        {logs.map((log) => (
-          <>
-            <tr>
-              <td>{log.username}</td>
-              <td>{log.fecha_evento}</td>
-              <td>{log.evento}</td>
-            </tr>
-          </>
-        ))}
+        <thead>
+          <tr>
+            <th>Usuario</th>
+            <th>Evento</th>
+            <th>Fecha</th>
+          </tr>
+        </thead>
+        <tbody>
+          {logs.map((log) => (
+            <>
+              <tr>
+                <td>{log.username}</td>
+                <td>{log.fecha_evento}</td>
+                <td>{log.evento}</td>
+              </tr>
+            </>
+          ))}
+        </tbody>
       </table>
     </>
   );

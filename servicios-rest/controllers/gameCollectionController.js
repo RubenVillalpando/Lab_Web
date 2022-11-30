@@ -11,7 +11,7 @@ exports.obtener_juegos_usuario = function (req, res) {
     async function (err, mdbclient) {
       if (err) {
         console.log(err);
-        res.status(500).end();
+        return res.status(500).end();
       }
 
       const database = mdbclient.db(dbName);
@@ -23,7 +23,7 @@ exports.obtener_juegos_usuario = function (req, res) {
 
       const usuario = await videogames.find(query);
       console.log("Consulta ejecutada...");
-      res.end(JSON.stringify(usuario));
+      return res.json(await usuario.toArray());
     }
   );
 };
@@ -35,20 +35,24 @@ exports.obtener_juego_por_nombre_usuario = function (req, res) {
     async function (err, mdbclient) {
       if (err) {
         console.log(err);
-        res.status(500).end();
+        return res.status(500).end();
       }
 
       const database = mdbclient.db(dbName);
 
       const videogames = database.collection("videogame_collection");
-      let user = req.params.username;
-      let gameName = req.params.nombre_juego;
+      let user = req.body.username;
+      let gameName = req.body.nombre_juego;
+      console.log("GameName", gameName);
 
-      const query = { username: user, nombre_juego: { $regex: gameName } };
+      const query = {
+        username: user,
+        nombre_juego: { $regex: new RegExp(gameName, "i") },
+      };
 
       const juego = await videogames.find(query);
       console.log("Consulta ejecutada...");
-      res.end(JSON.stringify(juego));
+      return res.json(await juego.toArray());
     }
   );
 };
@@ -60,23 +64,23 @@ exports.obtener_juegos_por_consola_usuario = function (req, res) {
     async function (err, mdbclient) {
       if (err) {
         console.log(err);
-        res.status(500).end();
+        return res.status(500).end();
       }
 
       const database = mdbclient.db(dbName);
 
       const videogames = database.collection("videogame_collection");
-      let user = req.params.username;
-      let consoleName = req.params.plataforma_juego;
+      let user = req.body.username;
+      let consoleName = req.body.plataforma_juego;
 
       const query = {
         username: user,
-        plataforma_juego: { $regex: consoleName },
+        plataforma_juego: { $regex: new RegExp(consoleName, "i") },
       };
 
       const juegos = await videogames.find(query);
       console.log("Consulta ejecutada...");
-      res.end(JSON.stringify(juegos));
+      return res.json(await juegos.toArray());
     }
   );
 };
@@ -88,25 +92,31 @@ exports.agregar_juego_usuario = function (req, res) {
     async function (err, mdbclient) {
       if (err) {
         console.log(err);
-        res.status(500).end();
+        return res.status(500).end();
       }
 
       const database = mdbclient.db(dbName);
 
       const videogames = database.collection("videogame_collection");
+
       let user = req.body.username;
       let gameID = req.body.id_juego;
       let gameName = req.body.nombre_juego;
       let consoleName = req.body.plataforma_juego;
       let comment = req.body.comentario;
 
-      await videogames.insertOne({
+      const game = await videogames.insertOne({
         username: user,
         id_juego: gameID,
         nombre_juego: gameName,
         plataforma_juego: consoleName,
         comentario: comment,
       });
+
+      if (!game) {
+        return res.status(500).end();
+      }
+
       const logs = database.collection("logs");
       await logs.insertOne({
         username: user,
@@ -114,7 +124,7 @@ exports.agregar_juego_usuario = function (req, res) {
         evento: "Juego agregado...",
       });
       console.log("Juego registrado...");
-      res.status(200).end();
+      return res.status(200).end();
     }
   );
 };
@@ -126,7 +136,7 @@ exports.borrar_juego = function (req, res) {
     async function (err, mdbclient) {
       if (err) {
         console.log(err);
-        res.status(500).end();
+        return res.status(500).end();
       }
 
       const database = mdbclient.db(dbName);
@@ -134,7 +144,13 @@ exports.borrar_juego = function (req, res) {
       let user = req.body.username;
       let gameID = req.body.id_juego;
 
-      await videogames.deleteOne({ username: user, id_juego: gameID });
+      let response = await videogames.deleteOne({
+        username: user,
+        id_juego: gameID,
+      });
+      if (response.deletedCount) {
+        return res.status(500).end();
+      }
       const logs = database.collection("logs");
       await logs.insertOne({
         username: user,
@@ -142,7 +158,7 @@ exports.borrar_juego = function (req, res) {
         evento: "Juego eliminado...",
       });
       console.log("Juego eliminado...");
-      res.status(200).end();
+      return res.status(200).end();
     }
   );
 };

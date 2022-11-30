@@ -9,11 +9,11 @@ module.exports = function (app) {
   app.route("/games/:username").get(gameCollection.obtener_juegos_usuario);
   app.route("/games").post(gameCollection.agregar_juego_usuario);
   app
-    .route("/games/search-game-name/:username/:nombre_juego")
-    .get(gameCollection.obtener_juego_por_nombre_usuario);
+    .route("/games/search-game-name")
+    .post(gameCollection.obtener_juego_por_nombre_usuario);
   app
-    .route("/games/search-console-name/:username/:plataforma_juego")
-    .get(gameCollection.obtener_juegos_por_consola_usuario);
+    .route("/games/search-console-name/")
+    .post(gameCollection.obtener_juegos_por_consola_usuario);
 
   app.route("/games").delete(gameCollection.borrar_juego);
 

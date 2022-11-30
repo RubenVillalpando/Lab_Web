@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { useFetch } from "../customHooks/useFetch";
 import { CurrentUserContext } from "../customHooks/CurrentUserContext";
 
-export const GameCollectionAdd = () => {
+export const GameCollectionAdd = ({ games, setGames }) => {
   const { currentUser } = useContext(CurrentUserContext);
   const [textInput, setTextInput] = useState();
   const handleSubmit = (e) => {
@@ -18,10 +18,10 @@ export const GameCollectionAdd = () => {
       )
         .then((res) => {
           res.json().then((game) => {
-            fetch(`mongodb://127.0.0.1:27017/games`, {
-              method: "POST",
-              mode: "cors",
-              body: {
+            const myHeaders = new Headers();
+            setGames([
+              ...games,
+              {
                 username: currentUser,
                 id_juego: textInput,
                 nombre_juego: game.name,
@@ -30,11 +30,28 @@ export const GameCollectionAdd = () => {
                   : "",
                 comentario: "",
               },
+            ]);
+            myHeaders.append("Content-Type", "application/json");
+            fetch(`http://127.0.0.1:8585/games`, {
+              method: "POST",
+              mode: "cors",
+              headers: myHeaders,
+              body: JSON.stringify({
+                username: currentUser,
+                id_juego: textInput,
+                nombre_juego: game.name,
+                plataforma_juego: game.platforms.length
+                  ? game.platforms[0].name
+                  : "",
+                comentario: "",
+              }),
             })
               .then((res) => {
-                res.ok
-                  ? console.log("added game successfuly")
-                  : console.log(`Error: unexpected status ${res.status}`);
+                if (res.ok) {
+                  console.log("added game successfully");
+                } else {
+                  console.log(`Error: unexpected status ${res.status}`);
+                }
               })
               .catch((error) => {
                 console.log(error);
@@ -69,8 +86,4 @@ export const GameCollectionAdd = () => {
       </div>
     </form>
   );
-};
-
-GameCollectionAdd.propTypes = {
-  setIds: PropTypes.func.isRequired,
 };

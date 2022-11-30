@@ -13,7 +13,7 @@ export const Login = () => {
     console.log(password);
     const requestBody = { email: email, password: password };
     const myHeaders = new Headers();
-    myHeaders.append('Content-Type', 'application/json');
+    myHeaders.append("Content-Type", "application/json");
     fetch("http://127.0.0.1:8585/users/login", {
       method: "POST",
       mode: "cors",
@@ -22,8 +22,10 @@ export const Login = () => {
     })
       .then((res) => {
         if (res.ok) {
-          res.json().then((json) => setCurrentUser(json.username));
-          navigate("/game-collection");
+          res.json().then((json) => {
+            setCurrentUser(json.username);
+            navigate("/game-collection");
+          });
         } else window.alert("usuario o contraseña incorrectos");
       })
       .catch((error) => {
